@@ -1,5 +1,4 @@
 import React from "react";
-// import Speeches from "./pages/Speeches";
 import Dictaphone from "./pages/SpeechRecognition/Dictaphone";
 
 function App() {

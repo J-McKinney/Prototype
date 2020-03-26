@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import Jumbotron from "react-bootstrap/Jumbotron";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
+import { ReactMic } from "react-mic";
 import API from "../../utils/API";
+import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Jumbotron from "react-bootstrap/Jumbotron";
+import Row from "react-bootstrap/Row";
 import "./Dictaphone.css";
 
 //------------------------SPEECH RECOGNITION-----------------------------
@@ -22,13 +23,16 @@ let interimTranscript = "";
 
 //------------------------COMPONENT-----------------------------
 class Dictaphone extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     // Setting state for the SpeechRec, all speeches and each individual sentence before submit
     this.state = {
       listening: false,
-      // speeches: [],
-      sentence: ""
+      sentence: "",
+      downloadLinkURL: null,
+      isRecording: false,
+      recordingStarted: false,
+      recordingStopped: false
     };
 
     this.toggleListen = this.toggleListen.bind(this);
@@ -38,11 +42,14 @@ class Dictaphone extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
-  // Toggle listening commands when the Record button is pressed
+  // Toggle listening commands when the Start/Stop button is pressed
   toggleListen() {
     this.setState(
       {
-        listening: !this.state.listening
+        listening: !this.state.listening,
+        isRecording: !this.state.isRecording,
+        recordingStarted: !this.state.recordingStarted,
+        recordingStopped: !this.state.recordingStopped
       },
       this.handleListen
     );
@@ -134,8 +141,69 @@ class Dictaphone extends Component {
     // console.log("Transcript Submitted");
     // console.log(this.state.sentence);
   }
+  ////////////////////////////////////////////////////////////////////////////////////////////
+  stopRecording = () => {
+    this.setState({ isRecording: false });
+  };
+
+  onSave = blobObject => {
+    this.setState({
+      downloadLinkURL: blobObject.blobURL
+    });
+  };
+
+  onStart = () => {
+    // console.log("You can tap into the onStart callback");
+  };
+
+  onStop = blobObject => {
+    this.setState({ blobURL: blobObject.blobURL });
+  };
+
+  onData(recordedBlob) {
+    // console.log('ONDATA CALL IS BEING CALLED! ', recordedBlob);
+  }
+
+  onBlock() {
+    alert("ya blocked me!");
+  }
+
+  startRecording = () => {
+    this.setState({
+      isRecording: true,
+      recordingInSession: true,
+      recordingStarted: true,
+      recordingStopped: false,
+      isPaused: false
+    });
+  };
+
+  stopRecording = () => {
+    this.setState({
+      isRecording: false,
+      recordingInSession: false,
+      recordingStarted: false,
+      recordingStopped: true
+    });
+  };
 
   render() {
+    const {
+      blobURL,
+      // downloadLinkURL,
+      isRecording,
+      recordingInSession,
+      recordingStarted
+      // recordingStopped
+    } = this.state;
+
+    const recordBtn = recordingInSession
+      ? "fa disabled fa-record-vinyl fa-fw"
+      : "fa fa-record-vinyl fa-fw";
+    const stopBtn = !recordingStarted
+      ? "fa disabled fa-stop-circle"
+      : "fa fa-stop-circle";
+
     return (
       <div>
         <hr />
@@ -143,7 +211,7 @@ class Dictaphone extends Component {
           <Row id="buttonRow">
             <Col>
               <Button id="recordButton" onClick={this.toggleListen}>
-                Record
+                Start/Stop
               </Button>
             </Col>
             <Col>
@@ -158,6 +226,55 @@ class Dictaphone extends Component {
             </Col>
           </Row>
         </Container>
+        <hr />
+        <br />
+        <Jumbotron>
+          <Row>
+            <Col>
+              <ReactMic
+                className="oscilloscope"
+                record={isRecording}
+                backgroundColor="#333333"
+                visualSetting="sinewave"
+                audioBitsPerSecond={128000}
+                onStop={this.onStop}
+                onStart={this.onStart}
+                onSave={this.onSave}
+                onData={this.onData}
+                onBlock={this.onBlock}
+                onPause={this.onPause}
+                strokeColor="#0096ef"
+              />
+              <div id="oscilloscope-scrim">
+                {!recordingInSession && <div id="scrim" />}
+              </div>
+              <div id="controls">
+                <div className="column active">
+                  <i
+                    onClick={this.startRecording}
+                    className={recordBtn}
+                    aria-hidden="true"
+                  />
+                </div>
+                <div className="column">
+                  <i
+                    onClick={this.stopRecording}
+                    className={stopBtn}
+                    aria-hidden="true"
+                  />
+                </div>
+              </div>
+              <div id="audio-playback-controls">
+                <audio
+                  ref="audioSource"
+                  controls="controls"
+                  src={blobURL}
+                  controlsList="nodownload"
+                />
+              </div>
+            </Col>
+          </Row>
+        </Jumbotron>
         <hr />
         <br />
         <Jumbotron id="transcriptJumbotron">

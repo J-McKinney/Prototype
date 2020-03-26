@@ -17,7 +17,7 @@ app.use(routes);
 
 // Connect to the Mongo DB
 mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://localhost/speech2text",
+  process.env.MONGODB_URI || "mongodb://localhost/Prototype",
   {
     useUnifiedTopology: true,
     useNewUrlParser: true,

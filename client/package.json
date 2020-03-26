@@ -1,5 +1,5 @@
 {
-  "name": "mern",
+  "name": "Prototype",
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:3001/",
@@ -10,6 +10,7 @@
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.0-beta.17",
     "react-dom": "^16.13.1",
+    "react-mic": "^12.4.1",
     "react-reveal": "^1.2.2",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.4.1",
