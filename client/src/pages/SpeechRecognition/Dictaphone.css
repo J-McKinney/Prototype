@@ -1,0 +1,51 @@
+#wrapper {
+}
+
+#buttonContainer {
+}
+
+#buttonRow {
+    text-align: center;
+}
+
+#recordButton {
+    background-color: #0096ef;
+    border-color: #0096ef;
+}
+
+#resetButton {
+    background-color: #0096ef;
+    border-color: #0096ef;
+}
+
+#submitButton {
+    background-color: #0096ef;
+    border-color: #0096ef;
+}
+
+.oscilloscope {
+    text-align: center !important;
+    width: 100%;
+}
+
+#audio-playback-controls {
+    text-align: center !important;
+}
+
+#transcriptJumbotron {
+}
+
+#transcriptContainer {
+}
+
+#interimTranscript {
+}
+
+#finalTranscriptJumbotron {
+}
+
+#finalTranscriptContainer {
+}
+
+#finalTranscript {
+}

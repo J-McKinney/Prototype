@@ -56,18 +56,14 @@ class Dictaphone extends Component {
   }
 
   handleListen() {
-    // console.log("listening?", this.state.listening);
     if (this.state.listening) {
       recognition.start();
       recognition.onend = () => {
-        // console.log("...continue listening...");
         recognition.start();
       };
     } else {
       recognition.stop();
-      recognition.onend = () => {
-        // console.log("Stopped listening per click");
-      };
+      recognition.onend = () => {};
     }
 
     recognition.onstart = () => {
@@ -82,7 +78,6 @@ class Dictaphone extends Component {
         const transcript = event.results[i][0].transcript;
         if (event.results[i].isFinal) finalTranscript += transcript + " ";
         else interimTranscript += transcript;
-        // console.log(finalTranscript)
       }
       document.getElementById(
         "interimTranscript"
@@ -94,17 +89,14 @@ class Dictaphone extends Component {
       // and stops listening
       const transcriptArr = finalTranscript.split("  ");
       const stopCmd = transcriptArr.slice(-3, -1);
-      // console.log("stopCmd", stopCmd);
       if (stopCmd[0] === "stop" && stopCmd[1] === "listening") {
         recognition.stop();
         recognition.onend = () => {
-          // console.log("Stopped listening per command");
           const finalText = transcriptArr.slice(0, -3).join(" ");
           document.getElementById("finalTranscript").innerHTML = finalText;
         };
       }
       this.setState({ sentence: transcriptArr[0] });
-      // console.log(transcriptArr[0]);
     };
 
     //-----------------------------------------------------------------------
@@ -119,7 +111,6 @@ class Dictaphone extends Component {
     document.getElementById("interimTranscript").innerHTML = interimTranscript =
       "";
     document.getElementById("finalTranscript").innerHTML = finalTranscript = "";
-    // console.log("All Records Cleared");
   }
 
   // Handles updating component state when the user types into the input field
@@ -138,10 +129,8 @@ class Dictaphone extends Component {
         sentence: this.state.sentence
       }).catch(err => console.log(err));
     }
-    // console.log("Transcript Submitted");
-    // console.log(this.state.sentence);
   }
-  ////////////////////////////////////////////////////////////////////////////////////////////
+
   stopRecording = () => {
     this.setState({ isRecording: false });
   };
@@ -152,82 +141,49 @@ class Dictaphone extends Component {
     });
   };
 
-  onStart = () => {
-    // console.log("You can tap into the onStart callback");
-  };
-
   onStop = blobObject => {
     this.setState({ blobURL: blobObject.blobURL });
   };
-
-  onData(recordedBlob) {
-    // console.log('ONDATA CALL IS BEING CALLED! ', recordedBlob);
-  }
 
   onBlock() {
     alert("ya blocked me!");
   }
 
-  startRecording = () => {
-    this.setState({
-      isRecording: true,
-      recordingInSession: true,
-      recordingStarted: true,
-      recordingStopped: false,
-      isPaused: false
-    });
-  };
-
-  stopRecording = () => {
-    this.setState({
-      isRecording: false,
-      recordingInSession: false,
-      recordingStarted: false,
-      recordingStopped: true
-    });
-  };
-
   render() {
-    const {
-      blobURL,
-      // downloadLinkURL,
-      isRecording,
-      recordingInSession,
-      recordingStarted
-      // recordingStopped
-    } = this.state;
-
-    const recordBtn = recordingInSession
-      ? "fa disabled fa-record-vinyl fa-fw"
-      : "fa fa-record-vinyl fa-fw";
-    const stopBtn = !recordingStarted
-      ? "fa disabled fa-stop-circle"
-      : "fa fa-stop-circle";
+    const { blobURL, isRecording } = this.state;
 
     return (
-      <div>
+      <div id="wrapper">
         <hr />
         <Container id="buttonContainer">
           <Row id="buttonRow">
             <Col>
-              <Button id="recordButton" onClick={this.toggleListen}>
-                Start/Stop
+              <Button id="recordButton">
+                <h1>
+                  <i class="far fa-stop-circle" onClick={this.toggleListen}></i>
+                </h1>
               </Button>
             </Col>
             <Col>
-              <Button id="resetButton" onClick={this.resetTranscripts}>
-                Reset Records
+              <Button id="resetButton">
+                <h1>
+                  <i class="fas fa-undo" onClick={this.resetTranscripts}></i>
+                </h1>
               </Button>
             </Col>
             <Col>
-              <Button id="submitButton" onClick={this.submitTranscripts}>
-                Submit Transcript
+              <Button id="submitButton">
+                <h1>
+                  <i
+                    class="far fa-thumbs-up"
+                    onClick={this.submitTranscripts}
+                  ></i>
+                </h1>
               </Button>
             </Col>
           </Row>
         </Container>
         <hr />
-        <br />
         <Jumbotron>
           <Row>
             <Col>
@@ -238,32 +194,10 @@ class Dictaphone extends Component {
                 visualSetting="sinewave"
                 audioBitsPerSecond={128000}
                 onStop={this.onStop}
-                onStart={this.onStart}
                 onSave={this.onSave}
-                onData={this.onData}
                 onBlock={this.onBlock}
-                onPause={this.onPause}
                 strokeColor="#0096ef"
               />
-              <div id="oscilloscope-scrim">
-                {!recordingInSession && <div id="scrim" />}
-              </div>
-              <div id="controls">
-                <div className="column active">
-                  <i
-                    onClick={this.startRecording}
-                    className={recordBtn}
-                    aria-hidden="true"
-                  />
-                </div>
-                <div className="column">
-                  <i
-                    onClick={this.stopRecording}
-                    className={stopBtn}
-                    aria-hidden="true"
-                  />
-                </div>
-              </div>
               <div id="audio-playback-controls">
                 <audio
                   ref="audioSource"
