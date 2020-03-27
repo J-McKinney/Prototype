@@ -3,9 +3,11 @@ import Dictaphone from "./pages/SpeechRecognition/Dictaphone";
 
 function App() {
   return (
-    <div>
-      <Dictaphone />
-    </div>
+    <>
+      <div className="App">
+        <Dictaphone />
+      </div>
+    </>
   );
 }
 

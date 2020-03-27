@@ -20,6 +20,16 @@ recognition.interimResults = true;
 recognition.lang = "en-US";
 let finalTranscript = "";
 let interimTranscript = "";
+let randomWordArr = [
+  "Happy",
+  "Never",
+  "Home",
+  "Jump",
+  "Wild",
+  "Angel",
+  "Touch",
+  "Head"
+];
 
 //------------------------COMPONENT-----------------------------
 class Dictaphone extends Component {
@@ -40,6 +50,7 @@ class Dictaphone extends Component {
     this.resetTranscripts = this.resetTranscripts.bind(this);
     this.submitTranscripts = this.submitTranscripts.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.randomWordGenerator = this.randomWordGenerator.bind(this);
   }
 
   // Toggle listening commands when the Start/Stop button is pressed
@@ -149,54 +160,53 @@ class Dictaphone extends Component {
     alert("ya blocked me!");
   }
 
+  randomWordGenerator() {
+    var randomWord = Math.floor(Math.random() * randomWordArr.length);
+    var word = randomWordArr[randomWord];
+    console.log(word);
+    document.getElementById("randomWordPlacement").innerHTML = word;
+  }
+
   render() {
     const { blobURL, isRecording } = this.state;
 
     return (
-      <div id="wrapper">
-        <hr />
-        <Container id="buttonContainer">
-          <Row id="buttonRow">
-            <Col>
-              <Button id="recordButton">
-                <h1>
-                  <i class="far fa-stop-circle" onClick={this.toggleListen}></i>
-                </h1>
-              </Button>
-            </Col>
-            <Col>
-              <Button id="resetButton">
-                <h1>
-                  <i class="fas fa-undo" onClick={this.resetTranscripts}></i>
-                </h1>
-              </Button>
-            </Col>
-            <Col>
-              <Button id="submitButton">
-                <h1>
-                  <i
-                    class="far fa-thumbs-up"
-                    onClick={this.submitTranscripts}
-                  ></i>
-                </h1>
-              </Button>
+      <Jumbotron fluid id="wrapper">
+        <Container id="randomWordContainer">
+          <Row id="randomWordRow">
+            <Col id="randomWordCol">
+              <div id="randomWordPlacement">
+                <br />
+              </div>
             </Col>
           </Row>
         </Container>
-        <hr />
-        <Jumbotron>
+        <Container>
+          <Row id="randomWordRow">
+            <Button id="randomWordButton" onClick={this.randomWordGenerator}>
+              <h3>Click For New Word</h3>
+            </Button>
+          </Row>
+        </Container>
+        {/*<Jumbotron id="transcriptJumbotron">
+          <Container id="transcriptContainer">
+            <div id="interimTranscript" />
+          </Container>
+        </Jumbotron>
+        <hr />*/}
+        <Container>
           <Row>
             <Col>
               <ReactMic
                 className="oscilloscope"
                 record={isRecording}
-                backgroundColor="#333333"
+                backgroundColor="black"
                 visualSetting="sinewave"
                 audioBitsPerSecond={128000}
                 onStop={this.onStop}
                 onSave={this.onSave}
                 onBlock={this.onBlock}
-                strokeColor="#0096ef"
+                strokeColor="#a2d0eb"
               />
               <div id="audio-playback-controls">
                 <audio
@@ -208,24 +218,58 @@ class Dictaphone extends Component {
               </div>
             </Col>
           </Row>
-        </Jumbotron>
-        <hr />
-        <br />
-        <Jumbotron id="transcriptJumbotron">
-          <Container id="transcriptContainer">
-            <div id="interimTranscript" />
-          </Container>
-        </Jumbotron>
-        <Jumbotron id="finalTranscriptJumbotron">
-          <Container id="finalTranscriptContainer">
-            <div
-              id="finalTranscript"
-              value={this.state.sentence}
-              onChange={this.handleInputChange}
-            />
-          </Container>
-        </Jumbotron>
-      </div>
+        </Container>
+        <Container id="buttonContainer">
+          <Row id="buttonRow">
+            <Col>
+              <Button id="recordButton">
+                <h1>
+                  <i
+                    id="favIcon"
+                    className="far fa-stop-circle"
+                    onClick={this.toggleListen}
+                  ></i>
+                </h1>
+              </Button>
+            </Col>
+            <Col>
+              <Button id="resetButton">
+                <h1>
+                  <i
+                    id="favIcon"
+                    className="fas fa-undo"
+                    onClick={this.resetTranscripts}
+                  ></i>
+                </h1>
+              </Button>
+            </Col>
+            <Col>
+              <Button id="submitButton">
+                <h1>
+                  <i
+                    id="favIcon"
+                    className="far fa-thumbs-up"
+                    onClick={this.submitTranscripts}
+                  ></i>
+                </h1>
+              </Button>
+            </Col>
+          </Row>
+        </Container>
+        <Container id="finalTranscriptContainer">
+          <div id="interimTranscript">
+            <br />
+          </div>
+          <br />
+          <div
+            id="finalTranscript"
+            value={this.state.sentence}
+            onChange={this.handleInputChange}
+          >
+            <br />
+          </div>
+        </Container>
+      </Jumbotron>
     );
   }
 }
