@@ -21,16 +21,27 @@ recognition.lang = "en-US";
 let finalTranscript = "";
 let interimTranscript = "";
 let randomWordArr = [
-  "Happy",
-  "Never",
-  "Home",
-  "Jump",
-  "Wild",
-  "Angel",
-  "Touch",
-  "Head",
-  "Incredible"
+  "Love","Night","Sweet","Dream","Work","Phone","One","Beauty","Late","Good","Forever","Rainbow","Dance","Dangerous","Baby","Queen",
+  "Hair","Light","Heart","Honey","Broke","Name","Crazy","Woman","Deep","Again","World","Girl","Fire","Lady","Best","Lost", "Trouble",
+  "Burn","Somebody","Sorry","Pretty","War","Stay","Slow","Song","Ring","Cream","Care","Have","Need","Hold","God","Deep","Together","Ain't",
+  "Imagine","Freedom","Fall","Think","Broken","Side","Mine","Boy","Never","Kiss","Wine","Girl","Bad","Hurt","Remember","Only","Perfect",
+  "Want","Time","Control","Blank","Liar","Breathe","Cry","Ready","Inside-Out","Eyes","Sexy","Dead","Blame","Blood","Make-Up","Proud", "Mad",
+  "Close","Last","Man","Young","Style","Alone","Life","Rain","Forget","Quit","Friend","Space","Light","Song","Listen","Feel","Happy","Never",
+  "Home","Jump","Wild","Angel","Touch","Head","Incredible"
 ];
+// let randomColorArr = [
+//   "blue",
+//   "indigo",
+//   "purple",
+//   "pink",
+//   "red",
+//   "orange",
+//   "yellow",
+//   "green",
+//   "teal",
+//   "cyan",
+//   "white"
+// ];
 
 //------------------------COMPONENT-----------------------------
 class Dictaphone extends Component {
@@ -52,6 +63,7 @@ class Dictaphone extends Component {
     this.submitTranscripts = this.submitTranscripts.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.randomWordGenerator = this.randomWordGenerator.bind(this);
+    // this.randomColorGenerator = this.randomColorGenerator.bind(this);
   }
 
   // Toggle listening commands when the Start/Stop button is pressed
@@ -167,6 +179,12 @@ class Dictaphone extends Component {
     console.log(word);
     document.getElementById("randomWordPlacement").innerHTML = word;
   }
+
+  // randomColorGenerator() {
+  //   var randomColor = Math.floor(Math.random() * randomColorArr.length);
+  //   var color = randomColorArr[randomColor];
+  //   console.log(color);
+  // }
 
   render() {
     const { blobURL, isRecording } = this.state;
