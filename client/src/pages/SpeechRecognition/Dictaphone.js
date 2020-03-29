@@ -176,7 +176,7 @@ class Dictaphone extends Component {
   randomWordGenerator() {
     var randomWord = Math.floor(Math.random() * randomWordArr.length);
     var word = randomWordArr[randomWord];
-    console.log(word);
+    // console.log(word);
     document.getElementById("randomWordPlacement").innerHTML = word;
   }
 
