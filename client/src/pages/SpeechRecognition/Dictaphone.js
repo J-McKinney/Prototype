@@ -4,9 +4,9 @@ import API from "../../utils/API";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
-import Jumbotron from "react-bootstrap/Jumbotron";
+// import Jumbotron from "react-bootstrap/Jumbotron";
 import Row from "react-bootstrap/Row";
-import "./Dictaphone.css";
+import "./styles/Dictaphone.css";
 
 //------------------------SPEECH RECOGNITION-----------------------------
 
@@ -28,7 +28,8 @@ let randomWordArr = [
   "Wild",
   "Angel",
   "Touch",
-  "Head"
+  "Head",
+  "Incredible"
 ];
 
 //------------------------COMPONENT-----------------------------
@@ -171,105 +172,99 @@ class Dictaphone extends Component {
     const { blobURL, isRecording } = this.state;
 
     return (
-      <Jumbotron fluid id="wrapper">
-        <Container id="randomWordContainer">
-          <Row id="randomWordRow">
-            <Col id="randomWordCol">
-              <div id="randomWordPlacement">
-                <br />
-              </div>
-            </Col>
-          </Row>
-        </Container>
-        <Container>
-          <Row id="randomWordRow">
-            <Button id="randomWordButton" onClick={this.randomWordGenerator}>
-              <h3>Click For New Word</h3>
-            </Button>
-          </Row>
-        </Container>
-        {/*<Jumbotron id="transcriptJumbotron">
+      <>
+        <div id="wrapper">
+          <Container id="randomWordContainer">
+            <Row id="randomWordRow">
+              <Col id="randomWordCol">
+                <div id="randomWordPlacement">
+                  <br />
+                </div>
+              </Col>
+            </Row>
+          </Container>
+          <Container>
+            <Row id="randomWordButtonRow">
+              <Button id="randomWordButton" onClick={this.randomWordGenerator}>
+                <div id="newWordText">Click For New Word</div>
+              </Button>
+            </Row>
+          </Container>
+          {/*<Jumbotron id="transcriptJumbotron">
           <Container id="transcriptContainer">
             <div id="interimTranscript" />
           </Container>
         </Jumbotron>
         <hr />*/}
-        <Container>
-          <Row>
-            <Col>
-              <ReactMic
-                className="oscilloscope"
-                record={isRecording}
-                backgroundColor="black"
-                visualSetting="sinewave"
-                audioBitsPerSecond={128000}
-                onStop={this.onStop}
-                onSave={this.onSave}
-                onBlock={this.onBlock}
-                strokeColor="#a2d0eb"
-              />
-              <div id="audio-playback-controls">
-                <audio
-                  ref="audioSource"
-                  controls="controls"
-                  src={blobURL}
-                  controlsList="nodownload"
+          <Container>
+            <Row>
+              <Col>
+                <ReactMic
+                  className="oscilloscope"
+                  record={isRecording}
+                  backgroundColor="#525252"
+                  visualSetting="frequencyBars"
+                  audioBitsPerSecond={128000}
+                  onStop={this.onStop}
+                  onSave={this.onSave}
+                  onBlock={this.onBlock}
+                  strokeColor="#4bf7f7"
                 />
-              </div>
-            </Col>
-          </Row>
-        </Container>
-        <Container id="buttonContainer">
-          <Row id="buttonRow">
-            <Col>
-              <Button id="recordButton">
-                <h1>
+                <div id="audio-playback-controls">
+                  <audio
+                    ref="audioSource"
+                    controls="controls"
+                    src={blobURL}
+                    controlsList="nodownload"
+                  />
+                </div>
+              </Col>
+            </Row>
+          </Container>
+          <Container id="buttonContainer">
+            <Row id="buttonRow">
+              <Col>
+                <Button id="recordButton">
                   <i
                     id="favIcon"
                     className="far fa-stop-circle"
                     onClick={this.toggleListen}
                   ></i>
-                </h1>
-              </Button>
-            </Col>
-            <Col>
-              <Button id="resetButton">
-                <h1>
+                </Button>
+              </Col>
+              <Col>
+                <Button id="resetButton">
                   <i
                     id="favIcon"
                     className="fas fa-undo"
                     onClick={this.resetTranscripts}
                   ></i>
-                </h1>
-              </Button>
-            </Col>
-            <Col>
-              <Button id="submitButton">
-                <h1>
+                </Button>
+              </Col>
+              <Col>
+                <Button id="submitButton">
                   <i
                     id="favIcon"
                     className="far fa-thumbs-up"
                     onClick={this.submitTranscripts}
                   ></i>
-                </h1>
-              </Button>
-            </Col>
-          </Row>
-        </Container>
-        <Container id="finalTranscriptContainer">
-          <div id="interimTranscript">
-            <br />
-          </div>
+                </Button>
+              </Col>
+            </Row>
+          </Container>
+          <Container id="finalTranscriptContainer">
+            <div id="interimTranscript" />
+            <div
+              id="finalTranscript"
+              value={this.state.sentence}
+              onChange={this.handleInputChange}
+            >
+              <br />
+            </div>
+          </Container>
           <br />
-          <div
-            id="finalTranscript"
-            value={this.state.sentence}
-            onChange={this.handleInputChange}
-          >
-            <br />
-          </div>
-        </Container>
-      </Jumbotron>
+        </div>
+      </>
     );
   }
 }
