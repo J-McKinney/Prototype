@@ -227,9 +227,9 @@ class Dictaphone extends Component {
 
     //-----------------------------------------------------------------------
 
-    recognition.onerror = event => {
-      // console.log("Error occurred in recognition: " + event.error);
-    };
+    // recognition.onerror = event => {
+    //   console.log("Error occurred in recognition: " + event.error);
+    // };
   }
 
   // Reset the interim and final transcript to not display anymore
@@ -261,19 +261,19 @@ class Dictaphone extends Component {
     this.setState({ isRecording: false });
   };
 
-  // onSave = blobObject => {
-  //   this.setState({
-  //     downloadLinkURL: blobObject.blobURL
-  //   });
-  // };
+  onSave = blobObject => {
+    this.setState({
+      downloadLinkURL: blobObject.blobURL
+    });
+  };
 
-  // onStop = blobObject => {
-  //   this.setState({ blobURL: blobObject.blobURL });
-  // };
+  onStop = blobObject => {
+    this.setState({ blobURL: blobObject.blobURL });
+  };
 
-  // onBlock() {
-  //   alert("ya blocked me!");
-  // }
+  onBlock() {
+    alert("ya blocked me!");
+  }
 
   randomWordGenerator() {
     var randomWord = Math.floor(Math.random() * randomWordArr.length);
@@ -317,9 +317,9 @@ class Dictaphone extends Component {
                   backgroundColor="#525252"
                   visualSetting="sinewave"
                   audioBitsPerSecond={128000}
-                  /*onStop={this.onStop}
+                  onStop={this.onStop}
                   onSave={this.onSave}
-                  onBlock={this.onBlock}*/
+                  onBlock={this.onBlock}
                   strokeColor="#4bf7f7"
                 />
                 <div id="audio-playback-controls">
