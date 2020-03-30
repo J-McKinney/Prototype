@@ -184,17 +184,17 @@ class Dictaphone extends Component {
   handleListen() {
     if (this.state.listening) {
       recognition.start();
-      recognition.onend = () => {
-        recognition.start();
-      };
+      // recognition.onend = () => {
+      //   recognition.start();
+      // };
     } else {
       recognition.stop();
       recognition.onend = () => {};
     }
 
-    recognition.onstart = () => {
-      // console.log("Listening!");
-    };
+    // recognition.onstart = () => {
+    //   console.log("Listening!");
+    // };
 
     // Interim and final transcript are diplayed on the screen
     finalTranscript = "";
