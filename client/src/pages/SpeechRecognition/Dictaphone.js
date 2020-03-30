@@ -315,7 +315,7 @@ class Dictaphone extends Component {
                   className="oscilloscope"
                   record={isRecording}
                   backgroundColor="#525252"
-                  visualSetting="frequencyBars"
+                  visualSetting="sinewave"
                   audioBitsPerSecond={128000}
                   onStop={this.onStop}
                   onSave={this.onSave}
