@@ -21,13 +21,116 @@ recognition.lang = "en-US";
 let finalTranscript = "";
 let interimTranscript = "";
 let randomWordArr = [
-  "Love","Night","Sweet","Dream","Work","Phone","One","Beauty","Late","Good","Forever","Rainbow","Dance","Dangerous","Baby","Queen",
-  "Hair","Light","Heart","Honey","Broke","Name","Crazy","Woman","Deep","Again","World","Girl","Fire","Lady","Best","Lost", "Trouble",
-  "Burn","Somebody","Sorry","Pretty","War","Stay","Slow","Song","Ring","Cream","Care","Have","Need","Hold","God","Deep","Together","Ain't",
-  "Imagine","Freedom","Fall","Think","Broken","Side","Mine","Boy","Never","Kiss","Wine","Girl","Bad","Hurt","Remember","Only","Perfect",
-  "Want","Time","Control","Blank","Liar","Breathe","Cry","Ready","Inside-Out","Eyes","Sexy","Dead","Blame","Blood","Make-Up","Proud", "Mad",
-  "Close","Last","Man","Young","Style","Alone","Life","Rain","Forget","Quit","Friend","Space","Light","Song","Listen","Feel","Happy","Never",
-  "Home","Jump","Wild","Angel","Touch","Head","Incredible"
+  // "Love",
+  // "Night",
+  // "Sweet",
+  // "Dream",
+  // "Work",
+  // "Phone",
+  // "One",
+  // "Beauty",
+  // "Late",
+  // "Good",
+  // "Forever",
+  // "Rainbow",
+  // "Dance",
+  // "Dangerous",
+  // "Baby",
+  // "Queen",
+  // "Hair",
+  // "Light",
+  // "Heart",
+  // "Honey",
+  // "Broke",
+  // "Name",
+  // "Crazy",
+  // "Woman",
+  // "Deep",
+  // "Again",
+  // "World",
+  // "Girl",
+  // "Fire",
+  // "Lady",
+  // "Best",
+  // "Lost",
+  // "Trouble",
+  // "Burn",
+  // "Somebody",
+  // "Sorry",
+  // "Pretty",
+  // "War",
+  // "Stay",
+  // "Slow",
+  // "Song",
+  // "Ring",
+  // "Cream",
+  // "Care",
+  // "Have",
+  // "Need",
+  // "Hold",
+  // "God",
+  // "Deep",
+  // "Together",
+  // "Ain't",
+  // "Imagine",
+  // "Freedom",
+  // "Fall",
+  // "Think",
+  // "Broken",
+  // "Side",
+  // "Mine",
+  // "Boy",
+  // "Never",
+  // "Kiss",
+  // "Wine",
+  // "Girl",
+  // "Bad",
+  // "Hurt",
+  // "Remember",
+  // "Only",
+  // "Perfect",
+  // "Want",
+  // "Time",
+  // "Control",
+  // "Blank",
+  // "Liar",
+  // "Breathe",
+  // "Cry",
+  // "Ready",
+  "Inside-Out",
+  // "Eyes",
+  // "Sexy",
+  // "Dead",
+  // "Blame",
+  // "Blood",
+  // "Make-Up",
+  // "Proud",
+  // "Mad",
+  // "Close",
+  // "Last",
+  // "Man",
+  // "Young",
+  // "Style",
+  // "Alone",
+  // "Life",
+  // "Rain",
+  // "Forget",
+  // "Quit",
+  // "Friend",
+  // "Space",
+  // "Light",
+  // "Song",
+  // "Listen",
+  // "Feel",
+  // "Happy",
+  // "Never",
+  // "Home",
+  // "Jump",
+  // "Wild",
+  // "Angel",
+  // "Touch",
+  // "Head",
+  "Incredible"
 ];
 // let randomColorArr = [
 //   "blue",
@@ -203,19 +306,11 @@ class Dictaphone extends Component {
           </Container>
           <Container>
             <Row id="randomWordButtonRow">
-              <Button id="randomWordButton" onClick={this.randomWordGenerator}>
+              <Button id="randomWordButton" onTouchStart={this.randomWordGenerator}>
                 <div id="newWordText">Click For New Word</div>
               </Button>
             </Row>
-          </Container>
-          {/*<Jumbotron id="transcriptJumbotron">
-          <Container id="transcriptContainer">
-            <div id="interimTranscript" />
-          </Container>
-        </Jumbotron>
-        <hr />*/}
-          <Container>
-            <Row>
+            <Row id="oscilloscopeRow">
               <Col>
                 <ReactMic
                   className="oscilloscope"
@@ -239,37 +334,6 @@ class Dictaphone extends Component {
               </Col>
             </Row>
           </Container>
-          <Container id="buttonContainer">
-            <Row id="buttonRow">
-              <Col>
-                <Button id="recordButton">
-                  <i
-                    id="favIcon"
-                    className="far fa-stop-circle"
-                    onClick={this.toggleListen}
-                  ></i>
-                </Button>
-              </Col>
-              <Col>
-                <Button id="resetButton">
-                  <i
-                    id="favIcon"
-                    className="fas fa-undo"
-                    onClick={this.resetTranscripts}
-                  ></i>
-                </Button>
-              </Col>
-              <Col>
-                <Button id="submitButton">
-                  <i
-                    id="favIcon"
-                    className="far fa-thumbs-up"
-                    onClick={this.submitTranscripts}
-                  ></i>
-                </Button>
-              </Col>
-            </Row>
-          </Container>
           <Container id="finalTranscriptContainer">
             <div id="interimTranscript" />
             <div
@@ -280,7 +344,25 @@ class Dictaphone extends Component {
               <br />
             </div>
           </Container>
-          <br />
+          <Container id="buttonContainer">
+            <Row id="buttonRow">
+              <Col>
+                <Button id="recordButton" onTouchStart={this.toggleListen}>
+                  <i id="favIcon" className="far fa-stop-circle"></i>
+                </Button>
+              </Col>
+              <Col>
+                <Button id="resetButton" onTouchStart={this.resetTranscripts}>
+                  <i id="favIcon" className="fas fa-undo"></i>
+                </Button>
+              </Col>
+              <Col>
+                <Button id="submitButton" onTouchStart={this.submitTranscripts}>
+                  <i id="favIcon" className="far fa-thumbs-up"></i>
+                </Button>
+              </Col>
+            </Row>
+          </Container>
         </div>
       </>
     );
