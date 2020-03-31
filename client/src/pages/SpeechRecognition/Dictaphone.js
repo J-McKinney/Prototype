@@ -184,9 +184,9 @@ class Dictaphone extends Component {
   handleListen() {
     if (this.state.listening) {
       recognition.start();
-      // recognition.onend = () => {
-      //   recognition.start();
-      // };
+      recognition.onend = () => {
+        recognition.start();
+      };
     } else {
       recognition.stop();
       recognition.onend = () => {};
@@ -234,9 +234,9 @@ class Dictaphone extends Component {
 
   // Reset the interim and final transcript to not display anymore
   resetTranscripts() {
-    document.getElementById("interimTranscript").text = interimTranscript =
+    document.getElementById("interimTranscript").innerHTML = interimTranscript =
       "";
-    document.getElementById("finalTranscript").text = finalTranscript = "";
+    document.getElementById("finalTranscript").innerHTML = finalTranscript = "";
   }
 
   // Handles updating component state when the user types into the input field
