@@ -234,9 +234,9 @@ class Dictaphone extends Component {
 
   // Reset the interim and final transcript to not display anymore
   resetTranscripts() {
-    document.getElementById("interimTranscript").innerHTML = interimTranscript =
+    document.querySelector("#interimTranscript").innerHTML = interimTranscript =
       "";
-    document.getElementById("finalTranscript").innerHTML = finalTranscript = "";
+    document.querySelector("#finalTranscript").innerHTML = finalTranscript = "";
   }
 
   // Handles updating component state when the user types into the input field
@@ -279,7 +279,7 @@ class Dictaphone extends Component {
     var randomWord = Math.floor(Math.random() * randomWordArr.length);
     var word = randomWordArr[randomWord];
     // console.log(word);
-    document.getElementById("randomWordPlacement").innerHTML = word;
+    document.querySelector("#randomWordPlacement").innerHTML = word;
   }
 
   // randomColorGenerator() {
@@ -305,6 +305,7 @@ class Dictaphone extends Component {
           </Container>
           <Container>
             <Row id="randomWordButtonRow">
+            {/* changed onClick laptop/desktop to onTouchStart mobile */}
               <Button id="randomWordButton" onTouchStart={this.randomWordGenerator}>
                 <div id="newWordText">Click For New Word</div>
               </Button>
@@ -315,7 +316,7 @@ class Dictaphone extends Component {
                   className="oscilloscope"
                   record={isRecording}
                   backgroundColor="#525252"
-                  visualSetting="sinewave"
+                  visualSetting="frequencyBars"
                   audioBitsPerSecond={128000}
                   onStop={this.onStop}
                   onSave={this.onSave}
