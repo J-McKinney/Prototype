@@ -234,9 +234,9 @@ class Dictaphone extends Component {
 
   // Reset the interim and final transcript to not display anymore
   resetTranscripts() {
-    document.getElementById("interimTranscript").innerText = interimTranscript =
+    document.getElementById("interimTranscript").text = interimTranscript =
       "";
-    document.getElementById("finalTranscript").innerText = finalTranscript = "";
+    document.getElementById("finalTranscript").text = finalTranscript = "";
   }
 
   // Handles updating component state when the user types into the input field
@@ -279,7 +279,7 @@ class Dictaphone extends Component {
     var randomWord = Math.floor(Math.random() * randomWordArr.length);
     var word = randomWordArr[randomWord];
     // console.log(word);
-    document.getElementById("randomWordPlacement").innerText = word;
+    document.getElementById("randomWordPlacement").innerHTML = word;
   }
 
   // randomColorGenerator() {
