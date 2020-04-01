@@ -134,8 +134,8 @@ let randomWordArr = [
 
 //------------------------COMPONENT-----------------------------
 class Dictaphone extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     // Setting state for the SpeechRec, all speeches and each individual sentence before submit
     this.state = {
       listening: false,
@@ -188,9 +188,9 @@ class Dictaphone extends Component {
       };
     }
 
-    recognition.onstart = () => {
-      console.log("Listening!");
-    };
+    // recognition.onstart = () => {
+    //   console.log("Listening!");
+    // };
 
     // speech recognition
     // Interim and final transcript are diplayed on the screen
