@@ -181,7 +181,7 @@ class Dictaphone extends Component {
         // console.log("...continue listening...");
         // recognition.start();
       // };
-    } else {
+    } else if (!this.state.listening) {
       recognition.stop();
       // recognition.onend = () => {
         // console.log("Stopped listening per click");
@@ -235,8 +235,7 @@ class Dictaphone extends Component {
 
   // speech recognition
   // Reset the interim and final transcript to not display anymore
-  resetTranscripts(event) {
-    event.preventDefault();
+  resetTranscripts() {
     document.getElementById("interimTranscript").innerHTML = interimTranscript =
       "";
     document.getElementById("finalTranscript").innerHTML = finalTranscript = "";
