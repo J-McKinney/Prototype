@@ -177,13 +177,13 @@ class Dictaphone extends Component {
     if (this.state.listening) {
       recognition.start();
       // recognition.onend = () => {
-        // console.log("...continue listening...");
-        // recognition.start();
+      // console.log("...continue listening...");
+      // recognition.start();
       // };
     } else {
       recognition.stop();
       // recognition.onend = () => {
-        // console.log("Stopped listening per click");
+      // console.log("Stopped listening per click");
       // };
     }
 
@@ -227,9 +227,9 @@ class Dictaphone extends Component {
 
     //-----------------------------------------------------------------------
     // speech recognition
-    // recognition.onerror = event => {
-    //   console.log("Error occurred in recognition: " + event.error);
-    // };
+    recognition.onerror = event => {
+      // console.log("Error occurred in recognition: " + event.error);
+    };
   }
 
   // speech recognition
