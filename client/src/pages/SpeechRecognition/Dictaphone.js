@@ -228,9 +228,9 @@ class Dictaphone extends Component {
 
     //-----------------------------------------------------------------------
     // speech recognition
-    recognition.onerror = event => {
-      console.log("Error occurred in recognition: " + event.error);
-    };
+    // recognition.onerror = event => {
+    //   console.log("Error occurred in recognition: " + event.error);
+    // };
   }
 
   // speech recognition
