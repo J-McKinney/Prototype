@@ -177,15 +177,15 @@ class Dictaphone extends Component {
     if (this.state.listening) {
       recognition.start();
       // this is what causes that weird jingle noise when deployed on the phone
-      // recognition.onend = () => {
+      recognition.onend = () => {
         // console.log("...continue listening...");
-      //   recognition.start();
-      // };
+        recognition.start();
+      };
     } if (!this.state.listening) {
       recognition.stop();
-      // recognition.onend = () => {
+      recognition.onend = () => {
         // console.log("Stopped listening per click");
-      // };
+      };
     }
 
     // recognition.onstart = () => {
