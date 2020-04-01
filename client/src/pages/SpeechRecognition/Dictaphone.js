@@ -183,9 +183,9 @@ class Dictaphone extends Component {
       };
     } else {
       recognition.stop();
-      // recognition.onend = () => {
-      // console.log("Stopped listening per click");
-      // };
+      recognition.onend = () => {
+        // console.log("Stopped listening per click");
+      };
     }
 
     // recognition.onstart = () => {
@@ -213,15 +213,15 @@ class Dictaphone extends Component {
       // If the user says and the SpeechRec recognizes, "stop listening", the program turns off the recorder
       // and stops listening
       const transcriptArr = finalTranscript.split("  ");
-      // const stopCmd = transcriptArr.slice(-3, -1);
+      const stopCmd = transcriptArr.slice(-3, -1);
       // console.log("stopCmd", stopCmd);
-      // if (stopCmd[0] === "stop" && stopCmd[1] === "listening") {
-      //   recognition.stop();
-      //   recognition.onend = () => {
-      //     const finalText = transcriptArr.slice(0, -3).join(" ");
-      //     document.getElementById("finalTranscript").innerHTML = finalText;
-      //   };
-      // }
+      if (stopCmd[0] === "stop" && stopCmd[1] === "listening") {
+        recognition.stop();
+        recognition.onend = () => {
+          const finalText = transcriptArr.slice(0, -3).join(" ");
+          document.getElementById("finalTranscript").innerHTML = finalText;
+        };
+      }
       this.setState({ sentence: transcriptArr[0] });
       // console.log(transcriptArr[0]);
     };
@@ -229,13 +229,14 @@ class Dictaphone extends Component {
     //-----------------------------------------------------------------------
     // speech recognition
     recognition.onerror = event => {
-      // console.log("Error occurred in recognition: " + event.error);
+      console.log("Error occurred in recognition: " + event.error);
     };
   }
 
   // speech recognition
   // Reset the interim and final transcript to not display anymore
-  resetTranscripts() {
+  resetTranscripts(event) {
+    event.preventDefault();
     document.getElementById("interimTranscript").innerHTML = interimTranscript =
       "";
     document.getElementById("finalTranscript").innerHTML = finalTranscript = "";
@@ -245,6 +246,7 @@ class Dictaphone extends Component {
   // speech recognition
   // Handles updating component state when the user types into the input field
   handleInputChange = event => {
+    event.preventDefault();
     const { name, value } = event.target;
     this.setState({
       [name]: value
@@ -253,8 +255,7 @@ class Dictaphone extends Component {
 
   // speech recognition
   // Sumbit your finalTranscript to the database
-  submitTranscripts(event) {
-    event.preventDefault();
+  submitTranscripts() {
     if (this.state.sentence) {
       API.saveSentence({
         sentence: this.state.sentence
@@ -286,7 +287,8 @@ class Dictaphone extends Component {
     alert("ya blocked me!");
   }
 
-  randomWordGenerator() {
+  randomWordGenerator(event) {
+    event.preventDefault();
     var randomWord = Math.floor(Math.random() * randomWordArr.length);
     var word = randomWordArr[randomWord];
     // console.log(word);
