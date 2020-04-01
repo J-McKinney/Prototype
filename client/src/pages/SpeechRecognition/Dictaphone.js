@@ -176,15 +176,15 @@ class Dictaphone extends Component {
   handleListen() {
     if (this.state.listening) {
       recognition.start();
-      recognition.onend = () => {
+      // recognition.onend = () => {
         // console.log("...continue listening...");
-        recognition.start();
-      };
+        // recognition.start();
+      // };
     } else {
       recognition.stop();
-      recognition.onend = () => {
+      // recognition.onend = () => {
         // console.log("Stopped listening per click");
-      };
+      // };
     }
 
     // recognition.onstart = () => {
