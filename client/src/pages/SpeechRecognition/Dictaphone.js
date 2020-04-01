@@ -134,8 +134,8 @@ let randomWordArr = [
 
 //------------------------COMPONENT-----------------------------
 class Dictaphone extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     // Setting state for the SpeechRec, all speeches and each individual sentence before submit
     this.state = {
       listening: false,
