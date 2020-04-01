@@ -151,7 +151,7 @@ class Dictaphone extends Component {
     this.handleListen = this.handleListen.bind(this);
     this.resetTranscripts = this.resetTranscripts.bind(this);
     this.submitTranscripts = this.submitTranscripts.bind(this);
-    // this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
     this.randomWordGenerator = this.randomWordGenerator.bind(this);
     // this.randomColorGenerator = this.randomColorGenerator.bind(this);
   }
@@ -243,14 +243,14 @@ class Dictaphone extends Component {
   }
 
   // speech recognition
-  // Handles updating component state when the user types into the input field
-  // handleInputChange = event => {
-  //   event.preventDefault();
-  //   const { name, value } = event.target;
-  //   this.setState({
-  //     [name]: value
-  //   });
-  // };
+  // Handles updating component state when the user speaks into the input field
+  handleInputChange = event => {
+    event.preventDefault();
+    const { name, value } = event.target;
+    this.setState({
+      [name]: value
+    });
+  };
 
   // speech recognition
   // Sumbit your finalTranscript to the database
