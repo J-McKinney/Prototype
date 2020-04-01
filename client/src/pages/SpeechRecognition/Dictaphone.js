@@ -159,6 +159,8 @@ class Dictaphone extends Component {
   // Toggle listening commands when the Start/Stop button is pressed
   toggleListen() {
     this.setState(
+      // speech recognition
+      this.handleListen,
       {
         // speech recognition
         listening: !this.state.listening,
@@ -166,9 +168,7 @@ class Dictaphone extends Component {
         isRecording: !this.state.isRecording,
         recordingStarted: !this.state.recordingStarted,
         recordingStopped: !this.state.recordingStopped
-      },
-      // speech recognition
-      this.handleListen
+      }
     );
   }
 
