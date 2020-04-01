@@ -138,7 +138,7 @@ class Dictaphone extends Component {
     super(props);
     // Setting state for the SpeechRec, all speeches and each individual sentence before submit
     this.state = {
-      listening: true,
+      listening: false,
       sentence: "",
       // Setting state for the react-mic
       downloadLinkURL: null,
@@ -161,7 +161,7 @@ class Dictaphone extends Component {
     this.setState(
       {
         // speech recognition
-        listening: this.state.listening,
+        listening: !this.state.listening,
         // react-mic
         isRecording: !this.state.isRecording,
         recordingStarted: !this.state.recordingStarted,
@@ -174,7 +174,7 @@ class Dictaphone extends Component {
 
   // speech recognition
   handleListen() {
-    if (!this.state.listening) {
+    if (this.state.listening) {
       recognition.start();
       recognition.onend = () => {
         // this is what causes that weird jingle noise when deployed on the phone
