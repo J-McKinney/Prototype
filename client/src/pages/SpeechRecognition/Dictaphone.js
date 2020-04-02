@@ -177,11 +177,14 @@ class Dictaphone extends Component {
     if (this.state.listening) {
       recognition.start();
       // this is what causes that weird jingle noise when deployed on the phone
-      // recognition.onend = () => {
-      recognition.onstart = () => {
+      recognition.onend = () => {
+        // this only lets you record your voice once and if you stop talking
+        // it will not write anything else after it
+        // recognition.onstart = () => {
         // console.log("...continue listening...");
-        // recognition.start();
+        recognition.start();
       };
+      // };
     } else {
       recognition.stop();
       recognition.onend = () => {
@@ -229,9 +232,9 @@ class Dictaphone extends Component {
 
     //-----------------------------------------------------------------------
     // speech recognition
-    // recognition.onerror = event => {
-    //   console.log("Error occurred in recognition: " + event.error);
-    // };
+    recognition.onerror = event => {
+      console.log("Error occurred in recognition: " + event.error);
+    };
   }
 
   // speech recognition
@@ -284,7 +287,7 @@ class Dictaphone extends Component {
 
   // react-mic
   onBlock() {
-    alert("ya blocked me!");
+    console.log("onBlock");
   }
 
   randomWordGenerator(event) {
