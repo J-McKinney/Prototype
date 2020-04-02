@@ -178,14 +178,14 @@ class Dictaphone extends Component {
       recognition.start();
       // this is what causes that weird jingle noise when deployed on the phone
       // recognition.onend = () => {
-        // console.log("...continue listening...");
-        // recognition.start();
+      // console.log("...continue listening...");
+      // recognition.start();
       // };
     } else {
       recognition.stop();
-      recognition.onend = () => {
+      // recognition.onend = () => {
         // console.log("Stopped listening per click");
-      };
+      // };
     }
 
     // recognition.onstart = () => {
@@ -319,10 +319,7 @@ class Dictaphone extends Component {
           <Container>
             <Row id="randomWordButtonRow">
               {/* changed onClick laptop/desktop to onTouchStart mobile */}
-              <Button
-                id="randomWordButton"
-                onTouchStart={this.randomWordGenerator}
-              >
+              <Button id="randomWordButton" onClick={this.randomWordGenerator}>
                 <div id="newWordText">Click For New Word</div>
               </Button>
             </Row>
@@ -363,17 +360,17 @@ class Dictaphone extends Component {
           <Container id="buttonContainer">
             <Row id="buttonRow">
               <Col>
-                <Button id="recordButton" onTouchStart={this.toggleListen}>
+                <Button id="recordButton" onClick={this.toggleListen}>
                   <i id="favIcon" className="far fa-stop-circle"></i>
                 </Button>
               </Col>
               <Col>
-                <Button id="resetButton" onTouchStart={this.resetTranscripts}>
+                <Button id="resetButton" onClick={this.resetTranscripts}>
                   <i id="favIcon" className="fas fa-undo"></i>
                 </Button>
               </Col>
               <Col>
-                <Button id="submitButton" onTouchStart={this.submitTranscripts}>
+                <Button id="submitButton" onClick={this.submitTranscripts}>
                   <i id="favIcon" className="far fa-thumbs-up"></i>
                 </Button>
               </Col>
