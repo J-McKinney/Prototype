@@ -176,11 +176,14 @@ class Dictaphone extends Component {
   handleListen() {
     if (this.state.listening) {
       recognition.start();
+      
       // this is what causes that weird jingle noise when deployed on the phone
       recognition.onend = () => {
+
         // this only lets you record your voice once and if you stop talking
         // it will not write anything else after it
         // recognition.onstart = () => {
+
         // console.log("...continue listening...");
         recognition.start();
       };
