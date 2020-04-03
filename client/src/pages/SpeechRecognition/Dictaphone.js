@@ -5,7 +5,6 @@ import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import axios from "axios";
 import "./styles/Dictaphone.css";
 
 //------------------------SPEECH RECOGNITION-----------------------------
@@ -20,118 +19,7 @@ recognition.interimResults = true;
 recognition.lang = "en-US";
 let finalTranscript = "";
 let interimTranscript = "";
-let randomWordArr = [
-  // "Love",
-  // "Night",
-  // "Sweet",
-  // "Dream",
-  // "Work",
-  // "Phone",
-  // "One",
-  // "Beauty",
-  // "Late",
-  // "Good",
-  // "Forever",
-  // "Rainbow",
-  // "Dance",
-  // "Dangerous",
-  // "Baby",
-  // "Queen",
-  // "Hair",
-  // "Light",
-  // "Heart",
-  // "Honey",
-  // "Broke",
-  // "Name",
-  // "Crazy",
-  // "Woman",
-  // "Deep",
-  // "Again",
-  // "World",
-  // "Girl",
-  // "Fire",
-  // "Lady",
-  // "Best",
-  // "Lost",
-  // "Trouble",
-  // "Burn",
-  // "Somebody",
-  // "Sorry",
-  // "Pretty",
-  // "War",
-  // "Stay",
-  // "Slow",
-  // "Song",
-  // "Ring",
-  // "Cream",
-  // "Care",
-  // "Have",
-  // "Need",
-  // "Hold",
-  // "God",
-  // "Deep",
-  // "Together",
-  // "Ain't",
-  // "Imagine",
-  // "Freedom",
-  // "Fall",
-  // "Think",
-  // "Broken",
-  // "Side",
-  // "Mine",
-  // "Boy",
-  // "Never",
-  // "Kiss",
-  // "Wine",
-  // "Girl",
-  // "Bad",
-  // "Hurt",
-  // "Remember",
-  // "Only",
-  // "Perfect",
-  // "Want",
-  // "Time",
-  // "Control",
-  // "Blank",
-  // "Liar",
-  // "Breathe",
-  // "Cry",
-  // "Ready",
-  "Inside-Out",
-  // "Eyes",
-  // "Sexy",
-  // "Dead",
-  // "Blame",
-  // "Blood",
-  // "Make-Up",
-  // "Proud",
-  // "Mad",
-  // "Close",
-  // "Last",
-  // "Man",
-  // "Young",
-  // "Style",
-  // "Alone",
-  // "Life",
-  // "Rain",
-  // "Forget",
-  // "Quit",
-  // "Friend",
-  // "Space",
-  // "Light",
-  // "Song",
-  // "Listen",
-  // "Feel",
-  // "Happy",
-  // "Never",
-  // "Home",
-  // "Jump",
-  // "Wild",
-  // "Angel",
-  // "Touch",
-  // "Head",
-  "Incredible"
-];
+let randomWordArr = ["Incredible"];
 
 //------------------------COMPONENT-----------------------------
 class Dictaphone extends Component {
@@ -143,9 +31,7 @@ class Dictaphone extends Component {
       sentence: "",
       // Setting state for the react-mic
       downloadLinkURL: null,
-      isRecording: false,
-      recordingStarted: false,
-      recordingStopped: false
+      isRecording: false
     };
 
     this.toggleListen = this.toggleListen.bind(this);
@@ -156,6 +42,16 @@ class Dictaphone extends Component {
     this.randomWordGenerator = this.randomWordGenerator.bind(this);
     // this.randomColorGenerator = this.randomColorGenerator.bind(this);
   }
+  componentDidMount() {
+    console.log("");
+    console.log("Listening is set to " + this.state.listening);
+    console.log("isRecording is set to " + this.state.isRecording);
+  }
+  componentDidUpdate() {
+    console.log("");
+    console.log("Listening is set to " + this.state.listening);
+    console.log("isRecording is set to " + this.state.isRecording);
+  }
 
   // Toggle listening commands when the Start/Stop button is pressed
   toggleListen() {
@@ -164,9 +60,7 @@ class Dictaphone extends Component {
         // speech recognition
         listening: !this.state.listening,
         // react-mic
-        isRecording: !this.state.isRecording,
-        recordingStarted: !this.state.recordingStarted,
-        recordingStopped: !this.state.recordingStopped
+        isRecording: !this.state.isRecording
       },
       // speech recognition
       this.handleListen
@@ -177,10 +71,9 @@ class Dictaphone extends Component {
   handleListen() {
     if (this.state.listening) {
       recognition.start();
-      
+
       // this is what causes that weird jingle noise when deployed on the phone
       recognition.onend = () => {
-
         // this only lets you record your voice once and if you stop talking
         // it will not write anything else after it
         // recognition.onstart = () => {
@@ -188,22 +81,18 @@ class Dictaphone extends Component {
         // console.log("...continue listening...");
         recognition.start();
       };
-      // };
     } else {
+      // } if (!this.state.listening) {
       recognition.stop();
       recognition.onend = () => {
         // console.log("Stopped listening per click");
       };
     }
 
-    // recognition.onstart = () => {
-    //   console.log("Listening!");
-    // };
-
     // speech recognition
     // Interim and final transcript are diplayed on the screen
     finalTranscript = "";
-    recognition.onresult = event => {
+    recognition.onresult = (event) => {
       interimTranscript = "";
       for (let i = event.resultIndex; i < event.results.length; i++) {
         const transcript = event.results[i][0].transcript;
@@ -219,7 +108,8 @@ class Dictaphone extends Component {
       //-------------------------COMMANDS------------------------------------
       // speech recognition
       // If the user says and the SpeechRec recognizes, "stop listening", the program turns off the recorder
-      // and stops listening
+      // and stops listening if no space between the double quotes in this block then, the program reads
+      // everything like one big long sentence instead of individual strings
       const transcriptArr = finalTranscript.split("  ");
       const stopCmd = transcriptArr.slice(-3, -1);
       // console.log("stopCmd", stopCmd);
@@ -236,7 +126,7 @@ class Dictaphone extends Component {
 
     //-----------------------------------------------------------------------
     // speech recognition
-    recognition.onerror = event => {
+    recognition.onerror = (event) => {
       console.log("Error occurred in recognition: " + event.error);
     };
   }
@@ -252,11 +142,11 @@ class Dictaphone extends Component {
 
   // speech recognition
   // Handles updating component state when the user speaks into the input field
-  handleInputChange = event => {
+  handleInputChange = (event) => {
     event.preventDefault();
     const { name, value } = event.target;
     this.setState({
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -265,8 +155,8 @@ class Dictaphone extends Component {
   submitTranscripts() {
     if (this.state.sentence) {
       API.saveSentence({
-        sentence: this.state.sentence
-      }).catch(err => console.log(err));
+        sentence: this.state.sentence,
+      }).catch((err) => console.log(err));
     }
     // console.log("Transcript Submitted");
     // console.log(this.state.sentence);
@@ -278,14 +168,14 @@ class Dictaphone extends Component {
   };
 
   // react-mic
-  onSave = blobObject => {
+  onSave = (blobObject) => {
     this.setState({
-      downloadLinkURL: blobObject.blobURL
+      downloadLinkURL: blobObject.blobURL,
     });
   };
 
   // react-mic
-  onStop = blobObject => {
+  onStop = (blobObject) => {
     this.setState({ blobURL: blobObject.blobURL });
   };
 
