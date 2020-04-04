@@ -8,7 +8,7 @@ router.route("/")
   .get(sentenceController.findAll)
   .post(sentenceController.create);
 
-// Matches with "/api/sentence/:id"
+// Matches with "/api/sentences/:id"
 router
   .route("/:id")
   .get(sentenceController.findById)

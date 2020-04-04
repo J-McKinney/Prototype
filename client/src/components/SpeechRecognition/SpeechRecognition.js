@@ -55,18 +55,18 @@ class Dictaphone extends Component {
   }
 
   // Toggle listening commands when the Start/Stop button is pressed
-  toggleListen() {
+  toggleListen = () => {
     this.setState(
       {
         // speech recognition
         listening: !this.state.listening,
         // react-mic
-        isRecording: !this.state.isRecording
+        isRecording: !this.state.isRecording,
       },
       // speech recognition
       this.handleListen
     );
-  }
+  };
 
   // speech recognition
   handleListen = () => {
