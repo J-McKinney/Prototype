@@ -1,5 +1,5 @@
 import React from "react";
-import Dictaphone from "./pages/SpeechRecognition/Dictaphone";
+import Dictaphone from "./components/SpeechRecognition/Dictaphone";
 
 function App() {
   return (
