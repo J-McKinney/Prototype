@@ -1,6 +1,8 @@
 const router = require("express").Router();
 const sentencesController = require("../../controllers/sentencesController");
 
+router.route("/sentence/:sentence").post(sentenceController.create);
+
 // Matches with "/api/sentences"
 router.route("/")
   .get(sentencesController.findAll)
