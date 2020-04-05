@@ -1,16 +1,13 @@
 import React, { Component } from "react";
-// import { ReactMic } from "react-mic";
 import API from "../../utils/API";
+import AudioAnalyser from "react-audio-analyser";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import "./Dictaphone.css";
 
-//----------------------------RECORDERJS---------------------------------
-
-//----------------------------RECORDERJS---------------------------------
-//------------------------SPEECH RECOGNITION-----------------------------
+//-----------------------------------------------------SPEECH RECOGNITION-----------------------------
 window.SpeechRecognition =
   window.SpeechRecognition || window.webkitSpeechRecognition;
 let recognition = new window.SpeechRecognition();
@@ -21,10 +18,11 @@ recognition.interimResults = true;
 recognition.lang = "en-US";
 let finalTranscript = "";
 let interimTranscript = "";
-//------------------------SPEECH RECOGNITION-----------------------------
-//------------------------RANDOM WORD GENERATOR--------------------------
+//-----------------------------------------------------SPEECH RECOGNITION-----------------------------
+
+//-----------------------------------------------------RANDOM WORD GENERATOR--------------------------
 let randomWordArr = ["Incredible"];
-//------------------------RANDOM WORD GENERATOR--------------------------
+//-----------------------------------------------------RANDOM WORD GENERATOR--------------------------
 
 //------------------------COMPONENT-----------------------------
 class Dictaphone extends Component {
@@ -33,61 +31,52 @@ class Dictaphone extends Component {
     this.state = {
       // Setting state for each individual sentence before submit
       sentence: "",
-      //------------------------SPEECH RECOGNITION-----------------------------
-      listening: false,
-      //------------------------SPEECH RECOGNITION-----------------------------
 
-      //----------------------------REACT-MIC---------------------------------
-      // Setting state for the REACT-MIC
-      // downloadLinkURL: null,
-      // isRecording: false,
-      //----------------------------REACT-MIC---------------------------------
+      //-----------------------------------------------------SPEECH RECOGNITION-----------------------------
+      listening: false,
+      //-----------------------------------------------------SPEECH RECOGNITION-----------------------------
+
+      //-------------------------------------------------------AUDIOANALYSER--------------------------------
+      status: "",
+      //-------------------------------------------------------AUDIOANALYSER--------------------------------
     };
 
-    //------------------------SPEECH RECOGNITION-----------------------------
+    //-----------------------------------------------------SPEECH RECOGNITION-----------------------------
     this.toggleListen = this.toggleListen.bind(this);
     this.handleListen = this.handleListen.bind(this);
     this.resetTranscripts = this.resetTranscripts.bind(this);
     this.submitTranscripts = this.submitTranscripts.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
-    //------------------------SPEECH RECOGNITION-----------------------------
+    //-----------------------------------------------------SPEECH RECOGNITION-----------------------------
 
-    //------------------------RANDOM WORD GENERATOR--------------------------
+    //-----------------------------------------------------RANDOM WORD GENERATOR--------------------------
     this.randomWordGenerator = this.randomWordGenerator.bind(this);
-    //------------------------RANDOM WORD GENERATOR--------------------------
+    //-----------------------------------------------------RANDOM WORD GENERATOR--------------------------
   }
   componentDidMount() {
-    // console.log("");
-    // console.log("Listening is set to " + this.state.listening);
-    // console.log("isRecording is set to " + this.state.isRecording);
+    // console.log();
   }
   componentDidUpdate() {
-    // console.log("");
-    // console.log("Listening is set to " + this.state.listening);
-    // console.log("isRecording is set to " + this.state.isRecording);
+    // console.log();
   }
 
-  //------------------------SPEECH RECOGNITION-----------------------------
+  //-----------------------------------------------------SPEECH RECOGNITION-----------------------------
   // Toggle listening commands when the Start/Stop button is pressed
   toggleListen = () => {
     this.setState(
       {
         // SPEECH RECOGNITION
         listening: !this.state.listening,
-
-        //----------------------------REACT-MIC---------------------------------
-        // isRecording: !this.state.isRecording,
-        //----------------------------REACT-MIC---------------------------------
       },
       // SPEECH RECOGNITION
       this.handleListen
     );
   };
-  //------------------------SPEECH RECOGNITION-----------------------------
 
-  //------------------------SPEECH RECOGNITION-----------------------------
   handleListen = () => {
     if (this.state.listening) {
+      this.controlAudio("recording");
+
       recognition.start();
 
       // this is what causes that weird jingle noise when deployed on the phone
@@ -101,8 +90,12 @@ class Dictaphone extends Component {
       };
     } else {
       // } if (!this.state.listening) {
+
+      // this.controlAudio("paused");
+
       recognition.stop();
       recognition.onend = () => {
+        this.controlAudio("inactive");
         // console.log("Stopped listening per click");
       };
     }
@@ -127,7 +120,7 @@ class Dictaphone extends Component {
       // SPEECH RECOGNITION
       // If the user says and the SpeechRec recognizes, "stop listening", the program turns off the recorder
       // and stops listening if no space between the double quotes in this block then, the program reads
-      // everything like one big long sentence instead of individual strings
+      // everything like one big long sentence inst||ead of ||individual strings
       const transcriptArr = finalTranscript.split("  ");
       const stopCmd = transcriptArr.slice(-3, -1);
       // console.log("stopCmd", stopCmd);
@@ -145,9 +138,7 @@ class Dictaphone extends Component {
       console.log("Error occurred in recognition: " + event.error);
     };
   };
-  //------------------------SPEECH RECOGNITION-----------------------------
 
-  //------------------------SPEECH RECOGNITION-----------------------------
   // Reset the interim and final transcript to not display anymore
   resetTranscripts() {
     document.getElementById("interimTranscript").innerHTML = interimTranscript =
@@ -155,9 +146,7 @@ class Dictaphone extends Component {
     document.getElementById("finalTranscript").innerHTML = finalTranscript = "";
     // console.log("All Records Cleared");
   }
-  //------------------------SPEECH RECOGNITION-----------------------------
 
-  //------------------------SPEECH RECOGNITION-----------------------------
   // Handles updating component state when the user speaks into the input field
   handleInputChange = (event) => {
     event.preventDefault();
@@ -166,9 +155,7 @@ class Dictaphone extends Component {
       [name]: value,
     });
   };
-  //------------------------SPEECH RECOGNITION-----------------------------
 
-  //------------------------SPEECH RECOGNITION-----------------------------
   // Sumbit your finalTranscript to the database
   submitTranscripts() {
     if (this.state.sentence) {
@@ -179,35 +166,23 @@ class Dictaphone extends Component {
     // console.log("Transcript Submitted");
     // console.log(this.state.sentence);
   }
-  //------------------------SPEECH RECOGNITION-----------------------------
+  //-----------------------------------------------------SPEECH RECOGNITION-----------------------------
 
-  //----------------------------REACT-MIC---------------------------------
-  // stopRecording = () => {
-  //   this.setState({ isRecording: false });
-  // };
-  //----------------------------REACT-MIC---------------------------------
+  //-------------------------------------------------------AUDIOANALYSER--------------------------------
+  controlAudio(status) {
+    this.setState({
+      status,
+    });
+  }
 
-  //----------------------------REACT-MIC---------------------------------
-  // onSave = (blobObject) => {
-  //   this.setState({
-  //     downloadLinkURL: blobObject.blobURL,
-  //   });
-  // };
-  //----------------------------REACT-MIC---------------------------------
+  changeScheme(e) {
+    this.setState({
+      audioType: e.target.value,
+    });
+  }
+  //-------------------------------------------------------AUDIOANALYSER--------------------------------
 
-  //----------------------------REACT-MIC---------------------------------
-  // onStop = (blobObject) => {
-  //   this.setState({ blobURL: blobObject.blobURL });
-  // };
-  //----------------------------REACT-MIC---------------------------------
-
-  //----------------------------REACT-MIC---------------------------------
-  // onBlock() {
-  //   console.log("onBlock");
-  // }
-  //----------------------------REACT-MIC---------------------------------
-
-  //------------------------RANDOM WORD GENERATOR--------------------------
+  //-----------------------------------------------------RANDOM WORD GENERATOR--------------------------
   randomWordGenerator(event) {
     event.preventDefault();
     var randomWord = Math.floor(Math.random() * randomWordArr.length);
@@ -215,22 +190,37 @@ class Dictaphone extends Component {
     // console.log(word);
     document.getElementById("randomWordPlacement").innerHTML = word;
   }
-  //------------------------RANDOM WORD GENERATOR--------------------------
-
-  // randomColorGenerator() {
-  //   var randomColor = Math.floor(Math.random() * randomColorArr.length);
-  //   var color = randomColorArr[randomColor];
-  //   console.log(color);
-  // }
-
-  //----------------------------RECORDERJS---------------------------------
-  
-  //----------------------------RECORDERJS---------------------------------
+  //-----------------------------------------------------RANDOM WORD GENERATOR--------------------------
 
   render() {
-    //----------------------------REACT-MIC---------------------------------
-    // const { blobURL, isRecording } = this.state;
-    //----------------------------REACT-MIC---------------------------------
+    //-------------------------------------------------------AUDIOANALYSER--------------------------------
+    const { status, audioSrc, audioType } = this.state;
+    const audioProps = {
+      audioType,
+      // audioOptions: {sampleRate: 30000}, // 设置输出音频采样率
+      status,
+      audioSrc,
+      timeslice: 1000, // timeslice（https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder/start#Parameters）
+      startCallback: (e) => {
+        console.log("succ start", e);
+      },
+      pauseCallback: (e) => {
+        console.log("succ pause", e);
+      },
+      stopCallback: (e) => {
+        this.setState({
+          audioSrc: window.URL.createObjectURL(e),
+        });
+        console.log("succ stop", e);
+      },
+      onRecordCallback: (e) => {
+        console.log("recording", e);
+      },
+      errorCallback: (err) => {
+        console.log("error", err);
+      },
+      //-------------------------------------------------------AUDIOANALYSER--------------------------------
+    };
 
     return (
       <>
@@ -251,33 +241,12 @@ class Dictaphone extends Component {
                 <div id="newWordText">Click For New Word</div>
               </Button>
             </Row>
-
-            {/*//----------------------------REACT-MIC---------------------------------
-              <Row id="oscilloscopeRow">
-              <Col>
-                <ReactMic
-                  className="oscilloscope"
-                  record={isRecording}
-                  backgroundColor="#525252"
-                  visualSetting="frequencyBars"
-                  audioBitsPerSecond={128000}
-                  onStop={this.onStop}
-                  onSave={this.onSave}
-                  onBlock={this.onBlock}
-                  strokeColor="#4bf7f7"
-                />
-                <div id="audio-playback-controls">
-                  <audio
-                    ref="audioSource"
-                    controls="controls"
-                    src={blobURL}
-                    controlsList="nodownload"
-                  />
-                </div>
-              </Col>
-            </Row>
-            //----------------------------REACT-MIC---------------------------------*/}
           </Container>
+
+          <Row id="oscilloscopeRow">
+            <AudioAnalyser className="oscilloscope" {...audioProps} />
+          </Row>
+
           <Container id="finalTranscriptContainer">
             <div id="interimTranscript"></div>
             <div
