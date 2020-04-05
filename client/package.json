@@ -1,5 +1,5 @@
 {
-  "name": "Prototype_2",
+  "name": "Prototype",
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:3001/",
