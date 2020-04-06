@@ -54,10 +54,10 @@ class Dictaphone extends Component {
     //-----------------------------------------------------RANDOM WORD GENERATOR--------------------------
   }
   componentDidMount() {
-    // console.log();
+    console.log(this.state.status);
   }
   componentDidUpdate() {
-    // console.log();
+    console.log(this.state.status);
   }
 
   //-----------------------------------------------------SPEECH RECOGNITION-----------------------------
@@ -117,20 +117,20 @@ class Dictaphone extends Component {
       document.getElementById("finalTranscript").innerHTML = finalTranscript;
 
       //-------------------------COMMANDS------------------------------------
-      // SPEECH RECOGNITION
-      // If the user says and the SpeechRec recognizes, "stop listening", the program turns off the recorder
-      // and stops listening if no space between the double quotes in this block then, the program reads
-      // everything like one big long sentence inst||ead of ||individual strings
+      // SPEECH RECOGNITION                        ||          ||
+      // If the user says and the SpeechRec recogni||zes, "stop|| listening", the program turns off the recorder
+      // and stops listening if no space between th||e double q||uotes in this block then, the program reads
+      // everything like one big long sentence inst\/ead of ind\/ividual strings
       const transcriptArr = finalTranscript.split("  ");
-      const stopCmd = transcriptArr.slice(-3, -1);
+      // const stopCmd = transcriptArr.slice(-3, -1);
       // console.log("stopCmd", stopCmd);
-      if (stopCmd[0] === "stop" && stopCmd[1] === "listening") {
-        recognition.stop();
-        recognition.onend = () => {
-          const finalText = transcriptArr.slice(0, -3).join(" ");
-          document.getElementById("finalTranscript").innerHTML = finalText;
-        };
-      }
+      // if (stopCmd[0] === "stop" && stopCmd[1] === "listening") {
+      //   recognition.stop();
+      //   recognition.onend = () => {
+      //     const finalText = transcriptArr.slice(0, -3).join(" ");
+      //     document.getElementById("finalTranscript").innerHTML = finalText;
+      //   };
+      // }
       this.setState({ sentence: transcriptArr[0] });
       // console.log(transcriptArr[0]);
     };
@@ -194,30 +194,31 @@ class Dictaphone extends Component {
 
   render() {
     //-------------------------------------------------------AUDIOANALYSER--------------------------------
-    const { status, audioSrc, audioType } = this.state;
+    const { status, audioSrc, audioType = "audio/mp3" } = this.state;
     const audioProps = {
       audioType,
-      // audioOptions: {sampleRate: 30000}, // 设置输出音频采样率
+      // audioOptions: {sampleRate: 30000},
       status,
       audioSrc,
-      timeslice: 1000, // timeslice（https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder/start#Parameters）
+      width: 290,
+      timeslice: 1000,
       startCallback: (e) => {
-        console.log("succ start", e);
+        // console.log("succ start", e);
       },
       pauseCallback: (e) => {
-        console.log("succ pause", e);
+        // console.log("succ pause", e);
       },
       stopCallback: (e) => {
         this.setState({
           audioSrc: window.URL.createObjectURL(e),
         });
-        console.log("succ stop", e);
+        // console.log("succ stop", e);
       },
       onRecordCallback: (e) => {
-        console.log("recording", e);
+        // console.log("recording", e);
       },
       errorCallback: (err) => {
-        console.log("error", err);
+        // console.log("error", err);
       },
       //-------------------------------------------------------AUDIOANALYSER--------------------------------
     };
@@ -243,9 +244,13 @@ class Dictaphone extends Component {
             </Row>
           </Container>
 
-          <Row id="oscilloscopeRow">
-            <AudioAnalyser className="oscilloscope" {...audioProps} />
-          </Row>
+          <Container id="oscilloscopeContainer">
+            <Row id="oscilloscopeRow">
+              <Col id="oscilloscopeCol">
+                <AudioAnalyser id="oscilloscope" {...audioProps} />
+              </Col>
+            </Row>
+          </Container>
 
           <Container id="finalTranscriptContainer">
             <div id="interimTranscript"></div>
